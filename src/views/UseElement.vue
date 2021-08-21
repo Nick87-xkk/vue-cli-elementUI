@@ -105,6 +105,7 @@
 
 <script>
 import studentAdd from '@/components/student-add'
+import qs from "qs"
 import Axios from "axios";
 
 export default {
@@ -114,108 +115,7 @@ export default {
   data() {
     return {
       //原始数据
-      tableData: [
-        /* {
-           id: 1,
-           date: '2016-05-02',
-           name: '王小虎',
-           sex: '男',
-           age: 21,
-           class: "18级四班",
-           nation: '汉',
-           address: '上海市普陀区金沙江路 1518 弄'
-         },
-         {
-           id: 2,
-           date: '2016-05-02',
-           name: '王小虎',
-           sex: '男',
-           age: 21,
-           class: "18级四班",
-           nation: '汉',
-           address: '上海市普陀区金沙江路 1518 弄'
-         },
-         {
-           date: '2016-05-02',
-           id: 3,
-           name: '王小虎',
-           sex: '男',
-           age: 21,
-           class: "18级四班",
-           nation: '汉',
-           address: '上海市普陀区金沙江路 1518 弄'
-         },
-         {
-           date: '2016-05-02',
-           id: 4,
-           name: '王小虎',
-           sex: '男',
-           age: 21,
-           class: "18级四班",
-           nation: '汉',
-           address: '上海市普陀区金沙江路 1518 弄'
-         },
-         {
-           date: '2016-05-02',
-           id: 5,
-           name: '王小虎',
-           sex: '男',
-           age: 21,
-           class: "18级四班",
-           nation: '汉',
-           address: '上海市普陀区金沙江路 1518 弄'
-         },
-         {
-           date: '2016-05-02',
-           id: 6,
-           name: '王小虎',
-           sex: '男',
-           age: 21,
-           class: "18级四班",
-           nation: '汉',
-           address: '上海市普陀区金沙江路 1518 弄'
-         },
-         {
-           date: '2016-05-02',
-           id: 7,
-           name: '王小虎',
-           sex: '男',
-           age: 21,
-           class: "18级四班",
-           nation: '汉',
-           address: '上海市普陀区金沙江路 1518 弄'
-         },
-         {
-           date: '2016-05-02',
-           id: 8,
-           name: '王小虎',
-           sex: '男',
-           age: 21,
-           class: "18级四班",
-           nation: '汉',
-           address: '上海市普陀区金沙江路 1518 弄'
-         },
-         {
-           date: '2016-05-02',
-           id: 9,
-           name: '王小虎',
-           sex: '男',
-           age: 21,
-           class: "18级四班",
-           nation: '汉',
-           address: '上海市普陀区金沙江路 1518 弄'
-         },
-         {
-           date: '2016-05-02',
-           id: 10,
-           name: '王小虎',
-           sex: '男',
-           age: 21,
-           class: "18级四班",
-           nation: '汉',
-           address: '上海市普陀区金沙江路 1518 弄'
-         },*/
-      ],
+      tableData: [],
       //切换功能页面
       displayPage: 'table',
       //每页数据
@@ -261,8 +161,24 @@ export default {
     },
     //删除操作
     handleDelete(index, row) {
-      console.log(index, row);
+      // console.log(typeof row.sid);
+      // console.log(this.tempArray[index].sid)
+      let stuID = qs.stringify({
+        "sid": row.sid
+      });
+      // console.log(stuID);
+      if (confirm("确定删除" + row.sname)) {
+        Axios.post("http://127.0.0.1:8888/student/delete", stuID).then(
+            () => alert("成功删除" + row.sname));
+      }
+      this.tempArray.splice(index, 1)
     },
+    //  添加数据
+    insertData: function () {
+
+    }
+
+
   },
   //渲染完成后立即执行的函数
   mounted: function () {
