@@ -9,7 +9,7 @@
     <el-container style="height:100vh; width: 100vw; border: 1px solid #aca4a4">
       <el-aside class="my-height" style="background-color: rgb(238, 241, 246)" width="200px">
         <el-menu default-active="1">
-          <el-menu-item index="1" @click="displayPage = 'table'">
+          <el-menu-item index="1" @click="displayPage = 'table';getData">
             <template slot="title"><i class="el-icon-user"></i>学生信息</template>
           </el-menu-item>
           <el-menu-item index="2" @click="displayPage = 'add'">
@@ -25,8 +25,8 @@
           <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>个人信息</el-dropdown-item>
-              <el-dropdown-item>注销</el-dropdown-item>
+              <el-dropdown-item>修改密码</el-dropdown-item>
+              <el-dropdown-item @click.native="logout">注销</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <span>{{ $route.query.username }}</span>
@@ -109,6 +109,7 @@ import qs from "qs"
 import Axios from "axios";
 
 export default {
+  name: "useElement",
   components: {
     studentAdd
   },
@@ -134,12 +135,11 @@ export default {
   },
   methods: {
     //从服务器端获取数据
-    getData: function () {
+    getData() {
       let that = this;
       Axios.get('http://127.0.0.1:8888/student/test').then(function (data) {
         that.tableData = data.data.records;
         that.getPageData();
-
       }).catch(function (error) {
         return error;
       })
@@ -169,13 +169,17 @@ export default {
       // console.log(stuID);
       if (confirm("确定删除" + row.sname)) {
         Axios.post("http://127.0.0.1:8888/student/delete", stuID).then(
-            () => alert("成功删除" + row.sname));
+            () => {
+              alert("成功删除" + row.sname),
+                  this.tempArray.splice(index, 1)
+            }
+        ).catch((error) => alert("删除失败"));
       }
-      this.tempArray.splice(index, 1)
     },
-    //  添加数据
-    insertData: function () {
-
+    //  注销
+    logout() {
+      this.tableData = [];
+      this.$router.push({path: "/", replace: true})
     }
 
 

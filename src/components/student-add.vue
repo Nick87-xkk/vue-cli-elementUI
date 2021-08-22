@@ -19,8 +19,8 @@
       <el-form-item label="民族" prop="nation">
         <el-input v-model="ruleForm.nation"></el-input>
       </el-form-item>
-      <el-form-item label="地址" prop="address">
-        <el-input v-model.number="ruleForm.address"></el-input>
+      <el-form-item label="职业" prop="address">
+        <el-input v-model.number="ruleForm.major"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -32,6 +32,8 @@
 
 <script>
 import {isString} from "element-ui/src/utils/types";
+import qs from "qs"
+import Axios from "axios";
 
 export default {
   name: "student-add",
@@ -92,7 +94,7 @@ export default {
         age: '',
         class: '',
         nation: '',
-        address: ''
+        major: ''
       },
       rules: {
         id: [
@@ -112,18 +114,24 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
+      let setInFor = qs.stringify({
+        'id': this.ruleForm.id,
+        'name': this.ruleForm.name,
+        'age': this.ruleForm.age,
+        'sex': this.ruleForm.sex,
+        'snativeplace': this.ruleForm.nation,
+        'smajor': this.ruleForm.major,
+        'sclass': this.ruleForm.class,
+        'snative': "汉族"
       });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+      console.log(setInFor);
+      Axios.post("http://127.0.0.1:8888/student/addStudent?", setInFor).then(
+          () => alert("添加成功")
+      ).catch((error) => alert("添加失败"));
     }
+  },
+  resetForm(formName) {
+    this.$refs[formName].resetFields();
   }
 }
 </script>
