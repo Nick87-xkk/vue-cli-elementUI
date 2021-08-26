@@ -14,7 +14,7 @@
     </div>
 
     <div>
-      <a :click="forget" href="">forget the password</a>
+      <a :click="forget" href="http://localhost:8020/#/changePW">forget the password</a>
     </div>
   </div>
 </template>
