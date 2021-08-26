@@ -32,14 +32,14 @@
       <el-col :lg="6" :sm="12">
         <el-result icon="success" subTitle="请根据提示进行操作" title="成功提示">
           <template slot="extra">
-            <el-button size="medium" type="primary" @click="active = 0">返回</el-button>
+            <el-button size="medium" @click="IfFinish">返回</el-button>
           </template>
         </el-result>
       </el-col>
     </div>
 
 
-    <el-button v-if="active<3" style="margin-top: 12px; position: relative" @click="next">下一步</el-button>
+    <el-button v-if="active<3" plain style="margin-top: 12px;" @click="next">下一步</el-button>
 
 
   </div>
@@ -47,10 +47,16 @@
 
 <script>
 import SIdentify from '@/components/SIdentify'
+import router from "@/router";
 
 export default {
   components: {
     's-identify': SIdentify
+  },
+  props: {
+    disabled: {
+      default: false
+    }
   },
   data() {
     return {
@@ -62,6 +68,7 @@ export default {
       newPassWD1: '',
       newPassWD2: '',
       verification: '',
+      Disable: true
     };
   },
   mounted() {
@@ -69,6 +76,7 @@ export default {
     this.makeCode(this.identifyCodes, 4);
   },
   methods: {
+    //验证码相关
     randomNum(min, max) {
       return Math.floor(Math.random() * (max - min) + min);
     },
@@ -84,8 +92,30 @@ export default {
       }
       console.log(this.identifyCode);
     },
+    //下一步
     next() {
       if (this.active++ > 3) this.active = 0;
+    },
+    //  检查验证码
+    IfVerification() {
+      if (this.account != null && this.verification === this.identifyCode) {
+        this.Disabled = false;
+      } else {
+        this.Disabled = true;
+      }
+      console.log(this.Disabled)
+    },
+    //  检查邮箱号
+    IfEmail() {
+      console.log('');
+    },
+    //  判断新旧密码
+    OldAndNewPassWord() {
+      console.log('');
+    },
+    //  完成后执行
+    IfFinish() {
+      router.push('/');
     }
   }
 };
