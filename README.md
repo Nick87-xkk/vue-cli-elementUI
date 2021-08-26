@@ -1,5 +1,5 @@
 # vue-test
-
+学生信息管理系统前端部分重构
 ## Project setup
 ```
 npm install
