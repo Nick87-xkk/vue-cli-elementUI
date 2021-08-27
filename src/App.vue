@@ -24,7 +24,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("./assets/login_bk.png");
+  background: url("./assets/1628093087274.jpg");
   background-size: cover;
 }
 

@@ -2,7 +2,7 @@
 <template>
   <div class="login-model">
     <div>
-      <p>LOG IN</p>
+      <p>LOGIN IN</p>
     </div>
 
     <input id="account" v-model="userAccount" class="input" placeholder="input your account" type="email">
@@ -10,7 +10,7 @@
 
     <div>
       <input id="login" class="btn" type="button" value="log in" @click="getId" v-on:click="$emit('login',userName)">
-      <input id="signin" class="btn" type="button" value="sign in" v-on:click="$emit('signin')">
+      <input id="signin" class="btn" type="button" value="sign in" v-on:click="signIn">
     </div>
 
     <div>
@@ -22,6 +22,7 @@
 <script>
 
 import Axios from "axios";
+import router from "@/router";
 
 export default {
   name: "login",
@@ -58,6 +59,9 @@ export default {
     },
     forget: function () {
       window.alert("i'm sorry to hear that!")
+    },
+    signIn() {
+      router.push('/signin');
     }
   }
 }

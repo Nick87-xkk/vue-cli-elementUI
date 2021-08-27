@@ -15,9 +15,6 @@
           <el-menu-item index="2" @click="displayPage = 'add'">
             <template slot="title"><i class="el-icon-document-add"></i>增加记录</template>
           </el-menu-item>
-          <el-menu-item index="3" @click="displayPage = 'set'">
-            <template slot="title"><i class="el-icon-setting"></i>权限管理</template>
-          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-container>
@@ -41,6 +38,7 @@
               <el-table-column
                   label="ID"
                   prop="sid">
+                <el-input v-show="false" slot-scope="scope" v-model="scope.row.date"></el-input>
               </el-table-column>
               <el-table-column
                   label="Name"
@@ -72,11 +70,17 @@
                 <template slot-scope="scope">
                   <el-button
                       size="mini"
+                      @click="handleEdit(scope.row, scope.column, scope.cell,scope.event)">修改
+                  </el-button>
+                  <el-button
+                      size="mini"
                       type="danger"
-                      @click="handleDelete(scope.$index, scope.row)">Delete
+                      @click="handleDelete(scope.$index, scope.row)">删除
                   </el-button>
                 </template>
               </el-table-column>
+
+
             </el-table>
             <!--分页-->
             <el-pagination
@@ -129,8 +133,10 @@ export default {
         pageSize: 8,
         //分页标记
         start: 0,
-        end: 0,
+        end: 0
       },
+      //修改的数据
+      editProp: []
     }
   },
   methods: {
@@ -158,6 +164,23 @@ export default {
     handleSizeChange(val) {
       this.query.pagesize = val;
       this.getPageData();
+    },
+    //编辑修改
+    handleEdit(row, column, cell, event) {
+
+      const property = column.property
+      if (this.editProp.includes(property)) {
+        cell.querySelector('.item__input').style.display = 'block'
+        cell.querySelector('.item__txt').style.display = 'none'
+      }
+      /*let stuInFor;
+      axios.post("http://127.0.0.1:8888/student/update",stuInFor).then(function () {
+
+        alert("更新成功！");
+        this.getData();
+      }).catch(function (err) {
+
+      })*/
     },
     //删除操作
     handleDelete(index, row) {
@@ -267,5 +290,32 @@ span {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
 {
   opacity: 0;
+}
+
+.item {
+  .item__input {
+    display: none;
+    width: 100px;
+    /* 调整elementUI中样式 如果不需要调整请忽略 */
+
+    .el-input__inner {
+      height: 24px !important;
+    }
+
+    /* 调整elementUI中样式 如果不需要调整请忽略 */
+
+    .el-input__suffix {
+      i {
+        font-size: 12px !important;
+        line-height: 26px !important;
+      }
+    }
+  }
+
+  .item__txt {
+    box-sizing: border-box;
+    line-height: 24px;
+    padding: 0 9px;
+  }
 }
 </style>
