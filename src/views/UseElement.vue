@@ -222,7 +222,7 @@ export default {
         'sclass': row.sclass,
         'snative': row.snative
       };
-      axios.post("http://127.0.0.1:8888/student/update", stuInFor).then(function () {
+      Axios.post("http://127.0.0.1:8888/student/update", stuInFor).then(function () {
 
         alert("更新成功！");
         this.getData();
