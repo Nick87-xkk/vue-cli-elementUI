@@ -34,35 +34,69 @@
             <el-table
                 :data="tempArray"
                 class=" el-main-table"
-                style="width: 100%">
+                style="width: 100%"
+            >
               <el-table-column
                   label="ID"
                   prop="sid">
-                <el-input v-show="false" slot-scope="scope" v-model="scope.row.date"></el-input>
+                <template slot-scope="scope">
+                  <el-input v-if="scope.row.isEdit" v-model="scope.row.sid" class="item" placeholder="请输入内容"></el-input>
+                  <div v-else class="txt">{{ scope.row.sid }}</div>
+                </template>
               </el-table-column>
               <el-table-column
                   label="Name"
                   prop="sname">
+                <template slot-scope="scope">
+                  <el-input v-if="scope.row.isEdit" v-model="scope.row.sname" class="item"
+                            placeholder="请输入内容"></el-input>
+                  <div v-else class="txt">{{ scope.row.sname }}</div>
+                </template>
               </el-table-column>
               <el-table-column
                   label="Sex"
                   prop="ssex">
+                <template slot-scope="scope">
+                  <el-input v-if="scope.row.isEdit" v-model="scope.row.ssex" class="item"
+                            placeholder="请输入内容"></el-input>
+                  <div v-else class="txt">{{ scope.row.ssex }}</div>
+                </template>
               </el-table-column>
               <el-table-column
                   label="Age"
                   prop="sage">
+                <template slot-scope="scope">
+                  <el-input v-if="scope.row.isEdit" v-model="scope.row.sage" class="item"
+                            placeholder="请输入内容"></el-input>
+                  <div v-else class="txt">{{ scope.row.sage }}</div>
+                </template>
               </el-table-column>
               <el-table-column
                   label="Class"
                   prop="sclass">
+                <template slot-scope="scope">
+                  <el-input v-if="scope.row.isEdit" v-model="scope.row.sclass" class="item"
+                            placeholder="请输入内容"></el-input>
+                  <div v-else class="txt">{{ scope.row.sclass }}</div>
+                </template>
               </el-table-column>
               <el-table-column
                   label="Nation"
                   prop="snative">
+                <template slot-scope="scope">
+                  <el-input v-if="scope.row.isEdit" v-model="scope.row.snative" class="item"
+                            placeholder="请输入内容"></el-input>
+                  <div v-else class="txt">{{ scope.row.snative }}</div>
+                </template>
               </el-table-column>
               <el-table-column
                   label="Major"
                   prop="smajor">
+                <template slot-scope="scope">
+                  <el-input v-if="scope.row.isEdit" v-model="scope.row.smajor" class="item"
+                            placeholder="请输入内容"></el-input>
+                  <div v-else class="txt">{{ scope.row.smajor }}</div>
+                </template>
               </el-table-column>
               <!--            编辑，删除列-->
               <el-table-column
@@ -70,7 +104,8 @@
                 <template slot-scope="scope">
                   <el-button
                       size="mini"
-                      @click="handleEdit(scope.row, scope.column, scope.cell,scope.event)">修改
+                      @click="handleEdit(scope.row, scope.column, scope.cell,scope.event)">
+                    {{ scope.row.btn ? '修改' : '提交' }}
                   </el-button>
                   <el-button
                       size="mini"
@@ -112,6 +147,7 @@ import studentAdd from '@/components/student-add'
 import qs from "qs"
 import Axios from "axios";
 
+let isEditObj = {isEdit: false, btn: true}
 export default {
   name: "useElement",
   components: {
@@ -133,10 +169,11 @@ export default {
         pageSize: 8,
         //分页标记
         start: 0,
-        end: 0
+        end: 0,
+
       },
-      //修改的数据
-      editProp: []
+
+
     }
   },
   methods: {
@@ -145,6 +182,10 @@ export default {
       let that = this;
       Axios.get('http://127.0.0.1:8888/student/test').then(function (data) {
         that.tableData = data.data.records;
+        for (let i in that.tableData) {
+          that.tableData[i] = {...that.tableData[0], ...isEditObj}
+        }
+        // console.log(that.tableData[0] = {...that.tableData[0],...isEditObj})
         that.getPageData();
       }).catch(function (error) {
         return error;
@@ -168,19 +209,26 @@ export default {
     //编辑修改
     handleEdit(row, column, cell, event) {
 
-      const property = column.property
-      if (this.editProp.includes(property)) {
-        cell.querySelector('.item__input').style.display = 'block'
-        cell.querySelector('.item__txt').style.display = 'none'
-      }
-      /*let stuInFor;
-      axios.post("http://127.0.0.1:8888/student/update",stuInFor).then(function () {
+      row.isEdit = true;
+      row.btn = false;
+
+      let stuInFor = {
+        "sid": row.sid,
+        'sname': row.sname,
+        'sage': row.sage,
+        'ssex': row.ssex,
+        'snativeplace': row.snativeplace,
+        'smajor': row.smajor,
+        'sclass': row.sclass,
+        'snative': row.snative
+      };
+      axios.post("http://127.0.0.1:8888/student/update", stuInFor).then(function () {
 
         alert("更新成功！");
         this.getData();
       }).catch(function (err) {
 
-      })*/
+      })
     },
     //删除操作
     handleDelete(index, row) {
