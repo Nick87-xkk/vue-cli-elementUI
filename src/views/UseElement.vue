@@ -34,9 +34,10 @@
             <el-table
                 :data="tempArray"
                 class=" el-main-table"
-                style="width: 100%"
+                style="width: 100%;text-align: center"
             >
               <el-table-column
+
                   label="ID"
                   prop="sid">
                 <template slot-scope="scope">
@@ -45,6 +46,7 @@
                 </template>
               </el-table-column>
               <el-table-column
+
                   label="Name"
                   prop="sname">
                 <template slot-scope="scope">
@@ -54,6 +56,7 @@
                 </template>
               </el-table-column>
               <el-table-column
+
                   label="Sex"
                   prop="ssex">
                 <template slot-scope="scope">
@@ -63,6 +66,7 @@
                 </template>
               </el-table-column>
               <el-table-column
+
                   label="Age"
                   prop="sage">
                 <template slot-scope="scope">
@@ -72,6 +76,7 @@
                 </template>
               </el-table-column>
               <el-table-column
+
                   label="Class"
                   prop="sclass">
                 <template slot-scope="scope">
@@ -81,6 +86,7 @@
                 </template>
               </el-table-column>
               <el-table-column
+
                   label="Nation"
                   prop="snative">
                 <template slot-scope="scope">
@@ -90,6 +96,7 @@
                 </template>
               </el-table-column>
               <el-table-column
+
                   label="Major"
                   prop="smajor">
                 <template slot-scope="scope">
@@ -103,9 +110,17 @@
                   align="right">
                 <template slot-scope="scope">
                   <el-button
+                      v-if="scope.row.btn === true"
                       size="mini"
                       @click="handleEdit(scope.row, scope.column, scope.cell,scope.event)">
-                    {{ scope.row.btn ? '修改' : '提交' }}
+                    修改
+                  </el-button>
+                  <el-button
+                      v-else
+                      size="mini"
+                      @click="EditChange(scope.row, scope.column, scope.cell,scope.event)"
+                  >
+                    提交
                   </el-button>
                   <el-button
                       size="mini"
@@ -172,7 +187,7 @@ export default {
         end: 0,
 
       },
-
+      EditStuInFor: ''
 
     }
   },
@@ -183,7 +198,7 @@ export default {
       Axios.get('http://127.0.0.1:8888/student/test').then(function (data) {
         that.tableData = data.data.records;
         for (let i in that.tableData) {
-          that.tableData[i] = {...that.tableData[0], ...isEditObj}
+          that.tableData[i] = {...that.tableData[i], ...isEditObj}
         }
         // console.log(that.tableData[0] = {...that.tableData[0],...isEditObj})
         that.getPageData();
@@ -206,13 +221,14 @@ export default {
       this.query.pagesize = val;
       this.getPageData();
     },
-    //编辑修改
+    //编辑按钮提交按钮切换
     handleEdit(row, column, cell, event) {
-
       row.isEdit = true;
       row.btn = false;
-
-      let stuInFor = {
+    },
+    //提交更新操作
+    EditChange(row, column, cell, event) {
+      this.EditStuInFor = qs.stringify({
         "sid": row.sid,
         'sname': row.sname,
         'sage': row.sage,
@@ -221,13 +237,13 @@ export default {
         'smajor': row.smajor,
         'sclass': row.sclass,
         'snative': row.snative
-      };
-      Axios.post("http://127.0.0.1:8888/student/update", stuInFor).then(function () {
-
+      });
+      Axios.post("http://127.0.0.1:8888/student/update", this.EditStuInFor).then(function () {
         alert("更新成功！");
-        this.getData();
+        row.isEdit = false;
+        row.btn = true;
       }).catch(function (err) {
-
+        return err
       })
     },
     //删除操作
@@ -258,7 +274,7 @@ export default {
   //渲染完成后立即执行的函数
   mounted: function () {
     this.getData()
-  }
+  },
 };
 </script>
 
@@ -347,7 +363,8 @@ span {
     /* 调整elementUI中样式 如果不需要调整请忽略 */
 
     .el-input__inner {
-      height: 24px !important;
+      height: 20px !important;
+      width: 50px !important;
     }
 
     /* 调整elementUI中样式 如果不需要调整请忽略 */
