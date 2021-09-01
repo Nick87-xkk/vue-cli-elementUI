@@ -238,7 +238,7 @@ export default {
         'sclass': row.sclass,
         'snative': row.snative
       });
-      Axios.post("http://127.0.0.1:8888/student/update", this.EditStuInFor).then(function () {
+      Axios.post("http://121.199.31.100:8888/student/update", this.EditStuInFor).then(function () {
         alert("更新成功！");
         row.isEdit = false;
         row.btn = true;
@@ -255,7 +255,7 @@ export default {
       });
       // console.log(stuID);
       if (confirm("确定删除" + row.sname)) {
-        Axios.post("http://127.0.0.1:8888/student/delete", stuID).then(
+        Axios.post("http://121.199.31.100:8888/student/delete", stuID).then(
             () => {
               alert("成功删除" + row.sname),
                   this.tempArray.splice(index, 1)

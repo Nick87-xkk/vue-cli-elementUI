@@ -125,7 +125,7 @@ export default {
         'snative': "汉族"
       });
       console.log(setInFor);
-      Axios.post("http://127.0.0.1:8888/student/addStudent?", setInFor).then(
+      Axios.post("http://121.199.31.100:8888/student/addStudent?", setInFor).then(
           () => alert("添加成功")
       ).catch((error) => alert("添加失败"));
     }
