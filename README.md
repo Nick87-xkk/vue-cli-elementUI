@@ -1,5 +1,7 @@
 # vue-test
-学生信息管理系统前端部分重构
+
+默认登录账号1800 密码123，下载依赖后可直接运行
+
 ## Project setup
 ```
 npm install
