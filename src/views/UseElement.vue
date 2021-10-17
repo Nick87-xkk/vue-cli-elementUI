@@ -160,7 +160,7 @@
 <script>
 import studentAdd from '@/components/student-add'
 import qs from "qs"
-import Axios from "axios";
+import * as $http from "@/api";
 
 let isEditObj = {isEdit: false, btn: true}
 export default {
@@ -195,7 +195,7 @@ export default {
     //从服务器端获取数据
     getData() {
       let that = this;
-      Axios.get('http://127.0.0.1:8888/student/test').then(function (data) {
+      $http.getData().then(function (data) {
         that.tableData = data.data.records;
         for (let i in that.tableData) {
           that.tableData[i] = {...that.tableData[i], ...isEditObj}
@@ -205,6 +205,7 @@ export default {
       }).catch(function (error) {
         return error;
       })
+
     },
     //将原始数据分页
     getPageData() {
@@ -238,7 +239,14 @@ export default {
         'sclass': row.sclass,
         'snative': row.snative
       });
-      Axios.post("http://121.199.31.100:8888/student/update", this.EditStuInFor).then(function () {
+      /*Axios.post("http:/localhost:7777/student/update", this.EditStuInFor).then(function () {
+        alert("更新成功！");
+        row.isEdit = false;
+        row.btn = true;
+      }).catch(function (err) {
+        return err
+      })*/
+      $http.postUpdateData(this.EditStuInFor).then(function () {
         alert("更新成功！");
         row.isEdit = false;
         row.btn = true;
@@ -255,7 +263,7 @@ export default {
       });
       // console.log(stuID);
       if (confirm("确定删除" + row.sname)) {
-        Axios.post("http://121.199.31.100:8888/student/delete", stuID).then(
+        $http.postDeleteData(stuID).then(
             () => {
               alert("成功删除" + row.sname),
                   this.tempArray.splice(index, 1)

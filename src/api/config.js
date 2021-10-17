@@ -1,7 +1,7 @@
 export default {
     baseUrl: {
-        dev: "http://xxxx.xx.xx/", // 开发环境
-        // fat: 'http://xxx.xx.xx.xx:8080'
-        //uat : "http://production.com"
+        dev: "http://localhost:8888", // 开发环境
+        fat: 'http://121.199.31.100:7777',
+        uat: "https://www.nick.top"
     },
 };

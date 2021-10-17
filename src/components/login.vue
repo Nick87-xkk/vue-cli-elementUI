@@ -36,7 +36,7 @@ export default {
   methods: {
     getId: function () {
       let that = this;
-      Axios.get("http://121.199.31.100:8888/usr/usrfindbyid?usrid=" + this.userAccount).then(
+      Axios.get("http://localhost:7777/usr/usrfindbyid?usrid=" + this.userAccount).then(
           function (getData) {
             if (that.userAccount === null || that.password == null) {
               alert('error');
@@ -51,7 +51,7 @@ export default {
               })
             }
 
-            console.log(getData.data);
+            // console.log(getData.data);
           }
       ).catch(function (error) {
         return error;

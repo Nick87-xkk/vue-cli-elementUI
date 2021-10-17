@@ -34,6 +34,9 @@
 </template>
 
 <script>
+
+import * as $http from "@/api";
+
 export default {
   name: 'Batch',
   data() {
@@ -65,12 +68,30 @@ export default {
   methods: {
     /** 鼠标移入cell */
     handleCellEnter(row, column, cell, event) {
-      row.isEdit = true
+      row.isEdit = true;
+
     },
     /** 鼠标移出cell */
     handleCellLeave(row, column, cell, event) {
       row.isEdit = false
     }
+  },
+  mounted() {
+    (function () {
+      $http.getUserData({usrid: 1800}).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    })();
+    (function () {
+      $http.getUserData({usrid: 1800}).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    })();
+
   }
 }
 </script>
