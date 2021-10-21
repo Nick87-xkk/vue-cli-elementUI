@@ -1,5 +1,7 @@
 # vue-test
-学生信息管理系统前端部分重构
+服务器挂掉了，另一个项目demoTest，是服务端
+默认登录账号1800 密码123，下载依赖后可直接运行
+
 ## Project setup
 ```
 npm install
