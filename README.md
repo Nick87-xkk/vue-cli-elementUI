@@ -1,5 +1,5 @@
 # vue-test
-服务器挂掉了，另一个项目demoTest，是服务端
+
 默认登录账号1800 密码123，下载依赖后可直接运行
 
 ## Project setup
