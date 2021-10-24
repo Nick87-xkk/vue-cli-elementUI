@@ -30,13 +30,17 @@
           prop="address">
       </el-table-column>
     </el-table>
+    <div>
+      {{ count }}
+    </div>
   </div>
+
 </template>
 
 <script>
 
 import * as $http from "@/api";
-
+// import store from  "@/store/index"
 export default {
   name: 'Batch',
   data() {
@@ -65,6 +69,11 @@ export default {
       }]
     }
   },
+  computed: {
+    count() {
+      return this.$store.state.count
+    }
+  },
   methods: {
     /** 鼠标移入cell */
     handleCellEnter(row, column, cell, event) {
@@ -91,7 +100,7 @@ export default {
         console.log(err);
       })
     })();
-
+    this.$store.commit('increment');
   }
 }
 </script>

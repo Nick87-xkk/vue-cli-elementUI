@@ -191,6 +191,20 @@ export default {
 
     }
   },
+  created() {
+    let that = this;
+    $http.getData().then(function (data) {
+      that.tableData = data.data.records;
+      for (let i in that.tableData) {
+        that.tableData[i] = {...that.tableData[i], ...isEditObj}
+      }
+      // console.log(that.tableData[0] = {...that.tableData[0],...isEditObj})
+      that.getPageData();
+    }).catch(function (error) {
+      return error;
+    })
+  }
+  ,
   methods: {
     //从服务器端获取数据
     getData() {
@@ -280,9 +294,9 @@ export default {
 
   },
   //渲染完成后立即执行的函数
-  mounted: function () {
-    this.getData()
-  },
+  // mounted: function () {
+  //   this.getData()
+  // },
 };
 </script>
 

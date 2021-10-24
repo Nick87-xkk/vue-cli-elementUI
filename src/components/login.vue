@@ -21,8 +21,9 @@
 
 <script>
 
-import Axios from "axios";
+
 import router from "@/router";
+import * as $http from "@/api";
 
 export default {
   name: "login",
@@ -36,7 +37,7 @@ export default {
   methods: {
     getId: function () {
       let that = this;
-      Axios.get("http://localhost:7777/usr/usrfindbyid?usrid=" + this.userAccount).then(
+      $http.getUserData({usrid: that.userAccount}).then(
           function (getData) {
             if (that.userAccount === null || that.password == null) {
               alert('error');
