@@ -20,7 +20,7 @@ const App1 = () => import(/* webpackChunkName: "group-foo" */'../App1');
 const changePassWord = () => import(/* webpackChunkName: "group-foo" */'../views/changePassWord');
 const test = () => import(/* webpackChunkName: "group-foo" */'../views/test');
 const SignIn = () => import(/* webpackChunkName: "group-foo" */'../views/SignIn');
-
+const elnav = () => import('../views/elNav');
 const routes = [
     {
         path: '/',
@@ -59,6 +59,11 @@ const routes = [
         path: '/test',
         name: 'test',
         component: test
+    },
+    {
+        path: '/elnav',
+        name: 'elnav',
+        component: elnav
     }
 ]
 

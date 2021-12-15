@@ -2,14 +2,14 @@
 <template>
   <div class="login-model">
     <div>
-      <p>LOGIN IN</p>
+      <p>LOGIN</p>
     </div>
 
     <input id="account" v-model="userAccount" class="input" placeholder="input your account" type="email">
     <input id="password" v-model="password" class="input" placeholder="input your password" type="password">
 
     <div>
-      <input id="login" class="btn" type="button" value="log in" @click="getId" v-on:click="$emit('login',userName)">
+      <input id="login" class="btn" type="button" value="login" @click="getId" v-on:click="$emit('login',userName)">
       <input id="signin" class="btn" type="button" value="sign in" v-on:click="signIn">
     </div>
 
@@ -50,6 +50,8 @@ export default {
                   username: that.userName,
                 }
               })
+            } else {
+              alert('登录失败！')
             }
 
             // console.log(getData.data);

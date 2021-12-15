@@ -33,6 +33,11 @@
     <div>
       {{ count }}
     </div>
+    <div>
+      <input id="throttle" v-model="inputValue" @input="debounceInput()"/>
+      <input v-model="outputValue" disabled="true" type="text">
+    </div>
+
   </div>
 
 </template>
@@ -66,7 +71,10 @@ export default {
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄',
         isEdit: false
-      }]
+      }],
+      inputValue: '',
+      outputValue: '',
+      valid: true,//节流
     }
   },
   computed: {
@@ -75,6 +83,22 @@ export default {
     }
   },
   methods: {
+    outputTest() {
+      console.log('outputTest' + this.valid)
+      return this.outputValue = this.inputValue;
+    },
+    //节流函数
+    debounceInput() {
+      if (!this.valid) {
+        return false;
+      }
+      this.valid = false
+      setTimeout(() => {
+        this.outputTest()
+        this.valid = true;
+      }, 1000)
+
+    },
     /** 鼠标移入cell */
     handleCellEnter(row, column, cell, event) {
       row.isEdit = true;
@@ -88,14 +112,14 @@ export default {
   mounted() {
     (function () {
       $http.getUserData({usrid: 1800}).then(res => {
-        console.log(res);
+        // console.log(res);
       }).catch(err => {
         console.log(err);
       })
     })();
     (function () {
       $http.getUserData({usrid: 1800}).then(res => {
-        console.log(res);
+        // console.log(res);
       }).catch(err => {
         console.log(err);
       })

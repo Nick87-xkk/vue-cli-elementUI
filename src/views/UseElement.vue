@@ -187,9 +187,11 @@ export default {
         end: 0,
 
       },
-      EditStuInFor: ''
-
+      EditStuInFor: '',
     }
+  },
+  beforeCreate() {
+    alert('登陆成功！')
   },
   created() {
     let that = this;
