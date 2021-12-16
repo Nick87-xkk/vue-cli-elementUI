@@ -2,7 +2,7 @@ import axios from "axios"; // 引用axios
 import config from "@/api/config";
 
 const instance = axios.create({
-    baseURL: config.baseUrl.fat,
+    baseURL: config.baseUrl.dev,
     timeout: 60000,
 });
 

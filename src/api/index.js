@@ -11,3 +11,7 @@ export const postDeleteData = (params) => post('/student/delete?', params);
 export const postUpdateData = (params) => post('/student/update?', params);
 //添加
 export const postAddData = (params) => post('student/addStudent', params);
+
+export const getTeacherInfo = (params) => get('teacher/getTeacher', params);
+
+export const getCourseInfo = (params) => get('course/getCourseAll', params);

@@ -7,13 +7,19 @@
     <!--                     v-on:authority-management="$router.push('管理页')"-->
     <!--        ></ElementLoad>-->
     <el-container style="height:100vh; width: 100vw; border: 1px solid #aca4a4">
-      <el-aside class="my-height" style="background-color: rgb(238, 241, 246)" width="200px">
-        <el-menu default-active="1">
+      <el-aside class="my-height" style="background-color: rgb(238, 241, 246);" width="200px">
+        <el-menu default-active="1" style="height: 100vh;">
           <el-menu-item index="1" @click="displayPage = 'table';getData">
             <template slot="title"><i class="el-icon-user"></i>学生信息</template>
           </el-menu-item>
           <el-menu-item index="2" @click="displayPage = 'add'">
             <template slot="title"><i class="el-icon-document-add"></i>增加记录</template>
+          </el-menu-item>
+          <el-menu-item index="3" @click="displayPage = 'teacher'">
+            <template slot="title"><i class="el-icon-document-add"></i>教师信息</template>
+          </el-menu-item>
+          <el-menu-item index="4" @click="displayPage = 'course'">
+            <template slot="title"><i class="el-icon-document-add"></i>课程信息</template>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -22,7 +28,7 @@
           <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>修改密码</el-dropdown-item>
+              <el-dropdown-item @click.native="test">修改密码</el-dropdown-item>
               <el-dropdown-item @click.native="logout">注销</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -146,11 +152,18 @@
         </transition>
         <transition name="fade">
           <el-main v-if="displayPage === 'add'" class="el-main">
-            <student-add class="el-main-add"></student-add>
+            <student-add class="el-main-table"
+                         style="width: 100%;text-align: center;position: fixed;margin-top: -300px;margin-left: 150px"></student-add>
           </el-main>
-        </transition>
-        <transition name="fade">
-          <el-main v-if="displayPage === 'set'" class="el-main "></el-main>
+          <el-main v-if="displayPage === 'teacher'" class="el-main ">
+            <teacher-info class="el-main-table"
+                          style="width: 100%;text-align: center;position: fixed;margin-top: -580px;margin-left: 202px"></teacher-info>
+          </el-main>
+          <el-main v-if="displayPage === 'course'" class="el-main ">
+            <course-info class="el-main-table"
+                         style="width: 100%;text-align: center;position: fixed;margin-top: -580px;margin-left: 202px"></course-info>
+          </el-main>
+
         </transition>
       </el-container>
     </el-container>
@@ -161,11 +174,15 @@
 import studentAdd from '@/components/student-add'
 import qs from "qs"
 import * as $http from "@/api";
+import TeacherInfo from "@/components/TeacherInfo";
+import CourseInfo from "@/components/CourseInfo";
 
 let isEditObj = {isEdit: false, btn: true}
 export default {
   name: "useElement",
   components: {
+    CourseInfo,
+    TeacherInfo,
     studentAdd
   },
   data() {
@@ -291,6 +308,9 @@ export default {
     logout() {
       this.tableData = [];
       this.$router.push({path: "/", replace: true})
+    },
+    test() {
+      this.$router.push({path: "/changePW", replace: true})
     }
 
 

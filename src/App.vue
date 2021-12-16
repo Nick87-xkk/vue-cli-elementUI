@@ -24,7 +24,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("assets/1628093087274.jpg");
+  background: url("https://ftp.bmp.ovh/imgs/2021/06/2ddb2a4c8730f88e.jpeg");
   background-size: cover;
 }
 
